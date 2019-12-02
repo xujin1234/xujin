@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace: 代表这个文件的命名空间,根据这个名称可以定位到这个文件 -->
+<mapper namespace="com.zhiyou.mapper.VideoMapper">
+	<insert id="add" keyColumn="video_id" keyProperty="video_id" useGeneratedKeys="true">
+	insert into video values(null,#{title},#{detail},#{time},#{speaker_id},#{course_id},#{video_url},#{image_url},#{play_num});
+	</insert>
+	
+	<delete id="delete">
+		delete from video where video_id=#{video_id};
+	</delete>
+	<resultMap type="video" id="videoMap">
+		<id column="video_id" property="video_id"/>
+		<result column="title" property="title"/>
+		<result column="detail" property="detail"/>
+		<result column="time" property="time"/>
+		<result column="speaker_id" property="speaker_id"/>
+		<result column="course_id" property="course_id"/>
+		<result column="video_url" property="video_url"/>
+		<result column="image_url" property="image_url"/>
+		<result column="play_num" property="play_num"/>
+		<!-- <collection property="EMPS" ofType="com.zhiyou.model.Emp">
+			<id column="EMPNO" property="EMPNO"/>
+			<result column="ENAME" property="ENAME"/>
+			<result column="JOB" property="JOB"/>
+			<result column="MGR" property="MGR"/>
+			<result column="HIREDATE" property="HIREDATE"/>
+			<result column="SAL" property="SAL"/>
+			<result column="COMM" property="COMM"/>
+			<result column="DEPTNO" property="DEPTNO"/>
+		</collection> -->
+	</resultMap>
+	
+	<update id="update" parameterType="video">
+	update video
+	<set>
+		<if test="title!=null">
+			title=#{title},
+		</if>
+		<if test="detail!=null">
+			detail=#{detail}
+		</if>
+		<if test="time!=null">
+			time=#{time}
+		</if>
+		<if test="speaker_id!=null">
+			speaker_id=#{speaker_id}
+		</if>
+		<if test="course_id!=null">
+			course_id=#{course_id}
+		</if>
+		<if test="video_url!=null">
+			video_url=#{video_url}
+		</if>
+		<if test="detail!=null">
+			image_url=#{image_url}
+		</if>
+		<if test="detail!=null">
+			play_num=#{play_num}
+		</if>
+		where video_id=#{video_id}
+	</set>
+	</update>
+	
+	
+	<select id="selectLike" resultMap="videoMap">
+	select * from video
+	<where>
+		<if test="video_id!=null">
+			video_id like concat('%',#{video_id},'%')
+		</if>
+		<if test="video_id!=null">
+			title like concat('%',#{title},'%')
+		</if>
+		<if test="video_id!=null">
+			detail like concat('%',#{detail},'%')
+		</if>
+		<if test="video_id!=null">
+			time like concat('%',#{time},'%')
+		</if>
+		<if test="video_id!=null">
+			speaker_id like concat('%',#{speaker_id},'%')
+		</if>
+		<if test="video_id!=null">
+			course_id like concat('%',#{course_id},'%')
+		</if>
+		<if test="video_id!=null">
+			video_url like concat('%',#{video_url},'%')
+		</if>
+		<if test="video_id!=null">
+			image_url like concat('%',#{image_url},'%')
+		</if>
+		<if test="video_id!=null">
+			play_num like concat('%',#{play_num},'%')
+		</if>
+		
+	</where>
+	</select>
+	
+	<select id="selectLimit" resultMap="videoMap">
+		select * from video limit ${page},${num}
+	</select>
+	
+	
+	<select id="selectById" resultMap="videoMap">
+		select * from video where video_id=#{video_id}
+	</select>
+	
+	<delete id="deleteAll">
+		delete from video where video_id in
+			<foreach open="(" collection="array" item="id" index="i" separator="," close=")">
+				#{id}	
+			</foreach>	
+	</delete>
+	
+</mapper>
+
+	
