@@ -6,6 +6,8 @@
 		<typeAlias type="com.zhiyou.model.Video" alias="video"/>
 		<typeAlias type="com.zhiyou.model.Course" alias="course"/>
 		<typeAlias type="com.zhiyou.model.Speaker" alias="speaker"/>
+		<typeAlias type="com.zhiyou.model.Admin" alias="admin"/>
+		<typeAlias type="com.zhiyou.model.Subject" alias="subject"/>
 	</typeAliases>
 	
 </configuration>

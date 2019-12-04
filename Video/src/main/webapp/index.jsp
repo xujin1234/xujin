@@ -45,7 +45,7 @@
 
 		<a onclick="JavaScript:addFavorite2()"><img src="z/sc.png" draggable="false">加入收藏</a>
 		
-		<a target="_blank" href="http://localhost:8080/Voids/controller/adminLogin.do"><img src="z/we.png" draggable="false">后台管理</a>
+		<a target="_blank"  id="login_open"><img src="z/we.png" draggable="false">后台管理</a>
 		<a class="color_e4"><img src="z/phone.png" draggable="false"> 0371-88888598　　4006-371-555</a>
 
 	</div>
@@ -208,14 +208,11 @@
 			<img src="z/logo.png" alt="" class="ma">
 		</div>
 		<div class="mask_content_body">
-			<form id="loginForm" action="http://localhost:8080/Voids/#">
-				<h3>快速登录</h3>
-				<input id="loginEmail" placeholder="请输入邮箱" name="email" type="email">
+			<form id="loginForm" action="adminLogin" onsubmit="return on()" method="post">
+				<input id="loginAccounts" onblur="onn()" placeholder="请输入管理员账号" name="accounts" >
+				<br> <i id="1"></i>
 				<input id="loginPassword" placeholder="请输入密码" name="password" type="password">
-				<div id="forget">
-					<a href="http://localhost:8080/video/front/user/forgetPassword.action">忘记密码？</a>
-				</div>
-				<input onclick="return commitLogin()" value="登　录" type="submit">
+				<input  value="登　录" type="submit">
 			</form>
 		</div>
 		<div class="mask_content_footer">
@@ -223,30 +220,36 @@
 		</div>
 	</div>
 </div>
-<div class="mask hidden" id="reg">
-	<div class="mask_content">
-		<div class="mask_content_header">
-			<img src="z/logo.png" alt="" class="ma">
-		</div>
-		<div class="mask_content_body">
-			<form id="regForm" action="http://localhost:8080/Voids/user/insertUser.action">
-				<h3>新用户注册</h3>
-				<input id="regEmail" placeholder="请输入邮箱" name="email" type="email"><span id="emailMsg"></span>
-				<input id="regPsw" placeholder="请输入密码" name="password" type="password">
-				<input id="regPswAgain" placeholder="请再次输入密码" name="psw_again" type="password"><span id="passMsg"></span>
-				<div id="yzm" class="form-inline">
-					<input name="yzm" style="width: 45%; display: inline-block;" type="text">
-					<div id="v_container" style="width: 45%;height: 40px;float:right;"><canvas id="verifyCanvas" width="100" height="38" style="cursor: pointer;">您的浏览器版本不支持canvas</canvas><canvas id="verifyCanvas" width="100" height="38" style="cursor: pointer;">您的浏览器版本不支持canvas</canvas></div>
-				</div>
-				<input onclick="return commitRegForm();" value="注　册" type="submit">
-			</form>
-		</div>
-		<div class="mask_content_footer">
-			<span id="reg_close">关　闭</span>
-		</div>
-	</div>
-</div>
 
+<script type="text/javascript">
+$('#login_open').click(function () {
+    $('#login').removeClass('hidden');
+});
+</script>
+<script type="text/javascript">
+	var i=false;
+		function onn() {
+			$.ajax({
+				url:"adminLogin1",	// 指定请求URL
+				type:"post",		// 指定请求方式	
+				data:{			// 请求附带的参数
+					accounts:$("#loginAccounts").val()
+				},
+				success:function(data){	// 成功后的回调函数      data代表服务器响应的数据
+					if (data==0) {
+						$("#1").text("管理员不存在");	
+						i=false;
+					}else{
+						$("#1").text("");
+						i=true;
+					}
+				}
+			})
+		}
+		function on(){
+			return i;
+		}
+	</script>
 
     
 <script src="z/jquery-1.js"></script>

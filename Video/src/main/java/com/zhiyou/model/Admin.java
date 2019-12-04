@@ -11,15 +11,15 @@ public class Admin {
 	
 	private Integer admin_id;
 	private String accounts;
-	private String pssword;
+	private String password;
 	private String admin_remark;
 	
 	
-	public Admin(String accounts, String pssword, String admin_remark) {
+	public Admin(String accounts, String password, String admin_remark) {
 		super();
 		
 		this.accounts = accounts;
-		this.pssword = pssword;
+		this.password = password;
 		this.admin_remark = admin_remark;
 		
 	}

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace: 代表这个文件的命名空间,根据这个名称可以定位到这个文件 -->
+<mapper namespace="com.zhiyou.mapper.SpeakerMapper">
+	<insert id="add" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+	insert into speaker values(null,#{speaker_name},#{speaker_desc},#{speaker_job},#{pic_url});
+	</insert>
+	
+	<delete id="delete">
+		delete from speaker where id=#{id};
+	</delete>
+	<!-- <resultMap type="video" id="videoMap">
+		<id column="video_id" property="video_id"/>
+		<result column="title" property="title"/>
+		<result column="detail" property="detail"/>
+		<result column="time" property="time"/>
+		<result column="speaker_id" property="speaker_id"/>
+		<result column="course_id" property="course_id"/>
+		<result column="video_url" property="video_url"/>
+		<result column="image_url" property="image_url"/>
+		<result column="play_num" property="play_num"/>
+		<association property="speaker" javaType="com.zhiyou.model.Speaker">
+			<id column="id" property="id"/>
+			<id column="speaker_name" property="speaker_name"/>
+			<id column="speaker_desc" property="speaker_desc"/>
+			<id column="speaker_job" property="speaker_job"/>
+			<id column="pic_url" property="pic_url"/>
+		</association>
+	</resultMap> -->
+	
+	<update id="update" parameterType="speaker">
+	update speaker
+	<set>
+		<if test="speaker_name!=null">
+			speaker_name=#{speaker_name},
+		</if>
+		<if test="speaker_desc!=null">
+			speaker_desc=#{speaker_desc},
+		</if>
+		<if test="speaker_job!=null">
+			speaker_job=#{speaker_job},
+		</if>
+		<if test="pic_url!=null">
+			pic_url=#{pic_url}
+		</if>
+		where id=#{id}
+	</set>
+	</update>
+	
+	<select id="selectAll" resultType="speaker">
+		select * from speaker
+	</select>
+	
+	<select id="selectLike" resultType="speaker">
+	select * from speaker
+	<where>
+		<if test="id!=null">
+			id like concat('%',#{id},'%')
+		</if>
+		<if test="speaker_name!=null">
+			speaker_name like concat('%',#{speaker_name},'%')
+		</if>
+	</where>
+	</select>
+	
+	<select id="selectAllLimit" resultType="speaker">
+		select * from speaker limit ${page},${num}
+	</select>
+	
+	
+	<select id="selectById" resultType="speaker">
+		select * from speaker where id=#{id}
+	</select>
+	<select id="selectCount" resultType="Integer">
+		select count(*) from speaker 
+	</select>
+	
+	<delete id="deleteAll">
+		delete from speaker where id in
+			<foreach open="(" collection="array" item="id" index="i" separator="," close=")">
+				#{id}	
+			</foreach>	
+	</delete>
+</mapper>
+
+	

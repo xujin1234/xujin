@@ -9,8 +9,8 @@ import com.zhiyou.model.Video;
 
 public interface VideoMapper {
 	
-	void add(Video video); //方法名与对应的的mapper中的id一致
-	void update(Video video);//参数与mapper中的parameterType一致
+	void add(Video video);
+	void update(Video video);
 	void delete(int id);
 	void deleteAll(int [] ids);
 	Video selectById(Integer id);

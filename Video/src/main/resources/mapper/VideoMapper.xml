@@ -21,16 +21,13 @@
 		<result column="video_url" property="video_url"/>
 		<result column="image_url" property="image_url"/>
 		<result column="play_num" property="play_num"/>
-		<!-- <collection property="EMPS" ofType="com.zhiyou.model.Emp">
-			<id column="EMPNO" property="EMPNO"/>
-			<result column="ENAME" property="ENAME"/>
-			<result column="JOB" property="JOB"/>
-			<result column="MGR" property="MGR"/>
-			<result column="HIREDATE" property="HIREDATE"/>
-			<result column="SAL" property="SAL"/>
-			<result column="COMM" property="COMM"/>
-			<result column="DEPTNO" property="DEPTNO"/>
-		</collection> -->
+		<association property="speaker" javaType="com.zhiyou.model.Speaker">
+			<id column="id" property="id"/>
+			<id column="speaker_name" property="speaker_name"/>
+			<id column="speaker_desc" property="speaker_desc"/>
+			<id column="speaker_job" property="speaker_job"/>
+			<id column="pic_url" property="pic_url"/>
+		</association>
 	</resultMap>
 	
 	<update id="update" parameterType="video">
@@ -40,22 +37,22 @@
 			title=#{title},
 		</if>
 		<if test="detail!=null">
-			detail=#{detail}
+			detail=#{detail},
 		</if>
 		<if test="time!=null">
-			time=#{time}
+			time=#{time},
 		</if>
 		<if test="speaker_id!=null">
-			speaker_id=#{speaker_id}
+			speaker_id=#{speaker_id},
 		</if>
 		<if test="course_id!=null">
-			course_id=#{course_id}
+			course_id=#{course_id},
 		</if>
 		<if test="video_url!=null">
-			video_url=#{video_url}
+			video_url=#{video_url},
 		</if>
 		<if test="detail!=null">
-			image_url=#{image_url}
+			image_url=#{image_url},
 		</if>
 		<if test="detail!=null">
 			play_num=#{play_num}
@@ -99,13 +96,16 @@
 	</where>
 	</select>
 	
-	<select id="selectLimit" resultMap="videoMap">
-		select * from video limit ${page},${num}
+	<select id="selectAllLimit" resultMap="videoMap">
+		select * from video v,speaker s where v.speaker_id=s.id limit ${page},${num}
 	</select>
 	
 	
 	<select id="selectById" resultMap="videoMap">
 		select * from video where video_id=#{video_id}
+	</select>
+	<select id="selectCount" resultType="Integer">
+		select count(*) from video 
 	</select>
 	
 	<delete id="deleteAll">

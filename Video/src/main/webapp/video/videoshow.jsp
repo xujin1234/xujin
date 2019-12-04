@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
@@ -10,13 +12,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>智游教育</title>
 		
-<link href="../js/bootstrap.css" rel="stylesheet" />
+<link href="http://localhost:8080/Video/js/bootstrap.css" rel="stylesheet" />
 
-<script src="../js/jquery-1.js"></script>
-<script src="../js/bootstrap.js"></script>
-<script src="../js/confirm.js"></script>
-<script src="../js/jquery.js"></script>
-<script src="../js/message_cn.js"></script>
+<script src="http://localhost:8080/Video/js/jquery-1.js"></script>
+<script src="http://localhost:8080/Video/js/bootstrap.js"></script>
+<script src="http://localhost:8080/Video/js/confirm.js"></script>
+<script src="http://localhost:8080/Video/js/jquery.js"></script>
+<script src="http://localhost:8080/Video/js/message_cn.js"></script>
 
 		<style type="text/css">
 		th {
@@ -35,12 +37,12 @@
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
 			<ul class="nav navbar-nav">
-				<li><a>视频管理</a></li>
-				<li><a>主讲人管理</a></li>
-				<li class="active"><a>课程管理</a></li>
+				<li class="active"><a href="videoShow">视频管理</a></li>
+				<li><a href="speakerShow">主讲人管理</a></li>
+				<li><a href="courseShow">课程管理</a></li>
 			</ul>
 			<p class="navbar-text navbar-right">
-				<span>admin</span> <i class="glyphicon glyphicon-log-in" aria-hidden="true"></i>&nbsp;&nbsp;<a  class="navbar-link">退出</a>
+				<span>${accounts}</span> <i class="glyphicon glyphicon-log-in" aria-hidden="true"></i>&nbsp;&nbsp;<a  class="navbar-link">退出</a>
 			</p>
 		</div>
 		<!-- /.navbar-collapse -->
@@ -80,7 +82,7 @@
           <th><input type="checkbox" id="all"></th>
           <th>序号</th>
           <th style="width:16%">标题</th>
-          <th style="width:60%">简介</th>
+          <th style="width:40%">简介</th>
           <th>讲师</th>
           <th>时长</th>
           <th>播放次数</th>
@@ -89,58 +91,35 @@
         </tr>
       </thead>
       <tbody>
-        
+        <c:if test="${ !empty list}">
+        <c:forEach  items="${list}" var="list" >
         <tr>
           <td><input type="checkbox" ></td>
-          <td>6</td>
-          <td>Web前端入门小项目</td>
-          <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">适合无编程基础但想学H5前端开发的同学入门学习，也适合UI、Java、PHP等其他学科学员预习或练习。本课程通过新闻页面、个人主页、个人简历、场景秀等多个项目案例由浅入深以项目实战的方式让同学们体验到前端开发乐趣。本课程突出实战，如果希望深入学习课程中涉及到的知识可报名学习智游前端开发课程。</td>
-          <td><a>✎</a></td>
-          <td><a onclick="deletee(&#39;6&#39;)">X</a></td>
+          <td>${ list.video_id}</td>
+          <td>${ list.title}</td>
+          <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ list.detail}</td>
+          <td>${ list.speaker.speaker_name}</td>
+          <td>${ list.time}</td>
+          <td>${ list.play_num}</td>
+          <td><a href="videoUpdate?video_id=${list.video_id }">✎</a></td>
+          <td><a href="videoDelete?video_id=${list.video_id }">X</a></td>
           </tr>
+          </c:forEach>
+          </c:if>
         
-        <tr>
-          <td><input type="checkbox"></td>
-          <td>7</td>
-          <td>前端开发与Git入门</td>
-          <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Git是一款免费、开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。经过本章课程学习你将轻松入门，学会使用Git管理自己的源代码，让自己的开发之路井井有条，想进一步学习Git进阶部分的同学可报名智游前端开发课程。</td>
-          <td><a>✎</a></td>
-          <td><a onclick="deletee(&#39;7&#39;)">X</a></td>
-          </tr>
-        
-        <tr>
-          <td><input type="checkbox"></td>
-          <td>8</td>
-          <td>每天20分钟轻松入门React</td>
-          <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">适合有一定HTML+JS基础、想学习React的同学。本课程循序渐进、浅显易懂，非常适合React入门学习。想进一步学习和使用React进行开发的同学可以报名智游前端开发课程。</td>
-          <td><a>✎</a></td>
-          <td><a onclick="deletee(&#39;8&#39;)">X</a></td>
-          </tr>
-        
-        <tr>
-          <td><input type="checkbox"></td>
-          <td>9</td>
-          <td>UI基础入门</td>
-          <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">适合无设计基础但想学UI设计的同学学习。本课程零基础入门，扎实的软件基础、高端的图形创意、资深产品经理的面对面授课尽在智游UI设计课程，希望成为全能设计师的你可报名智游UI设计课程。</td>
-          <td><a>✎</a></td>
-          <td><a onclick="deletee(&#39;9&#39;)" >X</a></td>
-          </tr>
-        
-        <tr>
-          <td><input type="checkbox"></td>
-          <td>11</td>
-          <td>Python编程零基础入门</td>
-          <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">适合无编程基础但想学Python的同学学习。本课程完全零基础入门，如果希望深入学习Python开发可报名学习智游Python企业开发课程。</td>
-          <td><a>✎</a></td>
-          <td><a onclick="deletee(&#39;11&#39;)">X</a></td>
-          </tr>
-        
-        <tr><td colspan="2">
-        <font>总共6条,当前第1页</font>
+        <tr><td colspan="3">
+        <font>总共${count}条,当前第${page }页</font>
 	
-		<a href="">1</a>&gt;
-	
-		<a href="">2</a>&gt;
+		<c:if test="${count %5==0}">
+		<c:set value="${count/5}" var="page" />
+	</c:if>
+	<c:if test="${count %5!=0}">
+		<c:set value="${count/5+1}" var="page" />
+	</c:if>	
+	<fmt:parseNumber var="page" value="${page}" integerOnly="true" />
+	<c:forEach var="i" begin="1" end="${page}">
+			<a href="videoShow?page=${i}">${i}</a>
+	</c:forEach>
 	
         </td></tr>
         </tbody>
@@ -156,6 +135,7 @@
 		function showAddPage(){
 			location.href="addShow";
 		}
+		
 		function delCourseById(Obj,id,title){
 
 			Confirm.show('温馨提示：', '确定要删除'+title+'么？', {

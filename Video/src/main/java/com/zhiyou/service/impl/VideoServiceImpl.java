@@ -44,9 +44,7 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	public List<Video> selectAllLimit(Integer page, Integer num) {
-		if(page==null) {
-			page=0;
-		}
+		
 		return mapper.selectAllLimit(page, num);
 	}
 
